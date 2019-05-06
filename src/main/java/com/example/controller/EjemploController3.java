@@ -1,5 +1,8 @@
 package com.example.controller;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,7 +17,8 @@ import com.example.model.Person;
 @Controller
 @RequestMapping("/ejemplo3")
 public class EjemploController3 {
-	
+		
+		private static final Log LOGGER=LogFactory.getLog(EjemploController3.class);
 		public static final String FORM_VIEW="form";
 		public static final String 	RESULT_VIEW="result";
 		
@@ -32,14 +36,22 @@ public class EjemploController3 {
 		
 		@GetMapping("/showform")
 		public String showForm(Model model) {
+			LOGGER.info("INFO TRACE");
+			LOGGER.info("WARNING TRACE");
+			LOGGER.info("ERROR TRACE");
+			LOGGER.info("DEBUG TRACE");
 			model.addAttribute("persona", new Person());
+//			//provocaremos un error en tiempo de ejecucion para que salte el error 500
+//			int i=6/0;
 			return FORM_VIEW;
 		}
 		
 		@PostMapping("/addPerson")
 		public ModelAndView addPerson(@ModelAttribute("persona") Person persona) {
+			LOGGER.info("METHOD: 'addPerson' -- PARAMS: '"+persona +"'");
 			ModelAndView mav=new ModelAndView(RESULT_VIEW);
 			mav.addObject("persona", persona);
+			LOGGER.info("TEMPLATE: '"+RESULT_VIEW+"' -- DATA: '"+persona+"'");
 			return mav;
 		}
 	
