@@ -2,6 +2,7 @@ package com.example.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
@@ -21,6 +22,13 @@ public ModelAndView request1(@RequestParam(name="nm" , required = false, default
 	return mav;
 }
 	
-	
+	//localhost:8090/ejemplo2/request2/Félix
+	//localhost:8090/ejemplo2/request2/Juan
+	@GetMapping("/request2/{nm}")
+	public ModelAndView request2(@PathVariable("nm") String nombre) {
+	ModelAndView mav=new ModelAndView(EXAMPLE2_VIEW);
+	mav.addObject("nm_in_model", nombre);
+	return mav;
+	}
 	
 }
