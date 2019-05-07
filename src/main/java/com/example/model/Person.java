@@ -1,8 +1,18 @@
 package com.example.model;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.Size;
+
+import org.springframework.lang.NonNull;
+
 public class Person {
 	
+	@NonNull
+	@Size(min=2, max=6)
 	private String nombre;
+	
+	@NonNull
+	@Min(18)
 	private int edad;
 	
 	public Person(String nombre, int edad) {

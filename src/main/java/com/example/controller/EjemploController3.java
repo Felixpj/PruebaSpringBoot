@@ -5,6 +5,8 @@ import org.apache.commons.logging.LogFactory;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -47,11 +49,16 @@ public class EjemploController3 {
 		}
 		
 		@PostMapping("/addPerson")
-		public ModelAndView addPerson(@ModelAttribute("persona") Person persona) {
-			LOGGER.info("METHOD: 'addPerson' -- PARAMS: '"+persona +"'");
+		public ModelAndView addPerson(@Validated @ModelAttribute("persona") Person persona, BindingResult bindingResult) {
 			ModelAndView mav=new ModelAndView(RESULT_VIEW);
-			mav.addObject("persona", persona);
-			LOGGER.info("TEMPLATE: '"+RESULT_VIEW+"' -- DATA: '"+persona+"'");
+			if(bindingResult.hasErrors()) {
+				mav.setViewName(FORM_VIEW);
+			}else {
+				mav.setViewName(RESULT_VIEW);
+				mav.addObject("persona",persona);
+				LOGGER.info("METHOD: 'addPerson' -- PARAMS: '"+persona +"'");
+				LOGGER.info("TEMPLATE: '"+RESULT_VIEW+"' -- DATA: '"+persona+"'");
+			}
 			return mav;
 		}
 	
