@@ -15,9 +15,10 @@ public class EjemploComponent {
 	
 		@Autowired
 		@Qualifier("courseJpaRepository")
-		private CourseJpaRepository courseJpaRepository;
+		private CourseJpaRepository courseJpaRepository; 
 		
 		public void sayHello() {
+			
 			LOG.info("HELLO FROM EJEMPLO_COMPONENT");
 		}
 	

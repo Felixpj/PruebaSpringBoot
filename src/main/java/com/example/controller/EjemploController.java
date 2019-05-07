@@ -13,7 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.example.component.EjemploComponent;
 import com.example.model.Person;
-import com.example.servicios.EjemploServicio;
+import com.example.service.EjemploServicio;
 
 @Controller
 @RequestMapping("/ejemplo")
