@@ -11,7 +11,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.example.entity.Course;
+import com.example.converter.CourseConverter;
+import com.example.model.CourseModel;
 import com.example.service.CourseService;
 
 
@@ -32,13 +33,13 @@ public class CourseController {
 	public ModelAndView listAllCourses() {
 		LOG.info("Call: "+ "listAllCourses()");
 		ModelAndView mav=new ModelAndView(COURSES_VIEW);
-		mav.addObject("course", new Course());
+		mav.addObject("course", new CourseModel());
 		mav.addObject("courses", courseService.listAllCourse());
 		return mav;
 	}
 	
 	@PostMapping("/addcourse")
-	public String addCourse(@ModelAttribute("course") Course course) {
+	public String addCourse(@ModelAttribute("course") CourseModel course) {
 		LOG.info("Call: "+ "addCourse()" + " -- Param: "+course.toString());
 		courseService.addCourse(course);
 		return "redirect:/courses/listcourses";

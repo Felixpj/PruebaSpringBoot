@@ -8,8 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-
+import com.example.converter.CourseConverter;
 import com.example.entity.Course;
+import com.example.model.CourseModel;
 import com.example.repository.CourseJpaRepository;
 
 @Service("courseService")
@@ -30,9 +31,10 @@ LOG.info("Call: "+"listAllCourses()");
 	}
 
 	@Override
-	public Course addCourse(Course course) {
+	public Course addCourse(CourseModel course) {
 		LOG.info("Call: "+"addCourse()");
-		return courseJpaRepository.save(course);
+//		
+		return courseJpaRepository.save(new CourseConverter().model2entity(course));
 	}
 
 	@Override
