@@ -13,12 +13,17 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.example.component.EjemploComponent;
 import com.example.model.Person;
+import com.example.servicios.EjemploServicio;
 
 @Controller
 @RequestMapping("/ejemplo")
 public class EjemploController {
 	
 	public static final String EXAMPLE_VIEW="ejemplo";
+	
+	@Autowired
+	@Qualifier("ejemploServicio")
+	private EjemploServicio ejemploServicio;
 	
 	@Autowired
 	@Qualifier("ejemploComponent")
@@ -28,7 +33,7 @@ public class EjemploController {
 	@GetMapping("/helloWorld")
 	public String helloWorld(Model model){
 		ejemploComponent.sayHello();
-		model.addAttribute("personas",getPersonas());
+		model.addAttribute("personas",ejemploServicio.getPersonas());
 		return EXAMPLE_VIEW;
 	}
 	
@@ -36,18 +41,11 @@ public class EjemploController {
 	@GetMapping("/helloWorldMAV")
 	public ModelAndView helloWorldMAV() {
 		ModelAndView mav=new ModelAndView(EXAMPLE_VIEW);
-		mav.addObject("personas", getPersonas());
+		mav.addObject("personas", ejemploServicio.getPersonas());
 		return mav;
 	}
 
-	private List<Person> getPersonas(){
-		List<Person> personas=new ArrayList<>();
-		personas.add(new Person("Félix", 33));
-		personas.add(new Person("Juan", 23));
-		personas.add(new Person("Jorge", 43));
-		personas.add(new Person("Arzuan", 13));
-		return personas;
-	}
+
 	
 
 	
