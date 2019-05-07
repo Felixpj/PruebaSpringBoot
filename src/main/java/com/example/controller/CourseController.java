@@ -1,5 +1,7 @@
 package com.example.controller;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -11,7 +13,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.example.entity.Course;
 import com.example.service.CourseService;
-import com.sun.org.glassfish.gmbal.ManagedAttribute;
+
+
 
 @Controller
 @RequestMapping("/courses")
@@ -19,21 +22,26 @@ public class CourseController {
 	
 	private static final String COURSES_VIEW="courses";
 	
+	private static final Log LOG=LogFactory.getLog(CourseController.class);
+	
 	@Autowired
-	@Qualifier("courseServiceImpl")
+	@Qualifier("courseService")
 	private CourseService courseService;
 	
-	@GetMapping("/listCourses")
+	@GetMapping("/listcourses")
 	public ModelAndView listAllCourses() {
+		LOG.info("Call: "+ "listAllCourses()");
 		ModelAndView mav=new ModelAndView(COURSES_VIEW);
+		mav.addObject("course", new Course());
 		mav.addObject("courses", courseService.listAllCourse());
 		return mav;
 	}
 	
 	@PostMapping("/addcourse")
 	public String addCourse(@ModelAttribute("course") Course course) {
+		LOG.info("Call: "+ "addCourse()" + " -- Param: "+course.toString());
 		courseService.addCourse(course);
-		return "redirect:/listCourses";
+		return "redirect:/courses/listcourses";
 	}
-
+ 
 }
